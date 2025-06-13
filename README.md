@@ -1,54 +1,34 @@
-# React + TypeScript + Vite
+# HomeChime
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**HomeChime** is a location-aware web application built using React + Vite (TypeScript) that alerts users when they are within 100 meters of a specified destination. It accepts a Google Maps live location link and a destination name, then continuously tracks the distance and plays an audio alert when proximity conditions are met.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- Accepts live Google Maps location links
+- Accepts destination input via text (e.g., place names, landmarks)
+- Uses OpenStreetMap (Nominatim) for destination geocoding
+- Calculates real-time distance using the Haversine formula
+- Periodic distance updates every 10 seconds
+- Plays a one-time alert sound when within 100 meters
+- Displays dynamic feedback messages with distance updates
+- Built using React, Vite, TypeScript, and Tailwind CSS
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Technologies Used
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **React + Vite** – Frontend framework
+- **TypeScript** – Type-safe JavaScript development
+- **Tailwind CSS** – Utility-first styling
+- **OpenStreetMap (Nominatim API)** – Destination geocoding
+- **Haversine Formula** – Accurate distance calculation
+- **HTML5 Audio API** – Audio playback on proximity detection
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### Prerequisites
+
+- Node.js (v16 or later)
+- npm or yarn
