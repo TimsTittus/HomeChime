@@ -1,13 +1,175 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HomeChime</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 1rem;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-900 text-white">
+  <header class="border-b border-white/10 backdrop-blur-md bg-black/20">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold">HC</span>
+        </div>
+        <span class="text-xl font-bold text-white">HomeChime</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto p-4">
+    <h1 class="text-4xl font-bold text-center my-10">Never Miss Your Stop Again</h1>
+
+    <div class="bg-white/5 p-6 rounded-lg space-y-6 max-w-3xl mx-auto">
+      <div class="space-y-4">
+        <div>
+          <label class="block text-gray-300 mb-1">Your Google Maps Live Location Link</label>
+          <input id="sourceLink" type="text"
+            class="w-full p-3 rounded bg-white text-black placeholder-gray-500"
+            placeholder="Paste live location URL (e.g., https://maps.google.com/?q=...)">
+        </div>
+
+        <div>
+          <label class="block text-gray-300 mb-1">Destination Address</label>
+          <input id="destination" type="text"
+            class="w-full p-3 rounded bg-white text-black placeholder-gray-500"
+            placeholder="Enter destination (e.g., Kochi Metro)">
+        </div>
+      </div>
+
+      <div id="map" class="mt-6"></div>
+      <button id="startTracking"
+        class="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 py-3 text-lg font-semibold rounded">Start
+        Tracking</button>
+    </div>
+
+    <audio id="alarm" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
+
+    <section class="mt-20">
+      <h2 class="text-3xl font-bold text-center mb-8">Why Choose HomeChime?</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white/5 p-6 rounded-lg text-center">
+          <h3 class="text-xl font-semibold mb-2">No Backend Required</h3>
+          <p>Runs entirely in your browser. No servers, no data storage, complete privacy.</p>
+        </div>
+        <div class="bg-white/5 p-6 rounded-lg text-center">
+          <h3 class="text-xl font-semibold mb-2">Works on All Browsers</h3>
+          <p>Compatible with Chrome, Firefox, Safari, and Edge. Mobile and desktop ready.</p>
+        </div>
+        <div class="bg-white/5 p-6 rounded-lg text-center">
+          <h3 class="text-xl font-semibold mb-2">Real-time Location Tracking</h3>
+          <p>Precise GPS tracking with 100-meter proximity detection for accurate alerts.</p>
+        </div>
+        <div class="bg-white/5 p-6 rounded-lg text-center">
+          <h3 class="text-xl font-semibold mb-2">Custom Audio Alarms</h3>
+          <p>Choose from built-in sounds or upload your own. Never sleep through your stop.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const destinationInput = document.getElementById("destination");
+    const sourceInput = document.getElementById("sourceLink");
+    const alarm = document.getElementById("alarm");
+    let map, userMarker, destMarker;
+    let destCoords = null;
+
+    function initMap() {
+      map = L.map("map").setView([9.5916, 76.5222], 13);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      userMarker = L.marker([9.5916, 76.5222]).addTo(map);
+    }
+
+    function fetchDestinationCoordinates(query) {
+      return fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.length > 0) {
+            const { lat, lon } = data[0];
+            return [parseFloat(lat), parseFloat(lon)];
+          } else {
+            throw new Error("Location not found.");
+          }
+        });
+    }
+
+    function haversineDistance(coord1, coord2) {
+      const R = 6371000;
+      const toRad = (x) => (x * Math.PI) / 180;
+
+      const [lat1, lon1] = coord1;
+      const [lat2, lon2] = coord2;
+
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initMap();
+
+      document.getElementById("startTracking").addEventListener("click", async () => {
+        const srcLink = sourceInput.value.trim();
+        const destinationText = destinationInput.value.trim();
+
+        if (!srcLink || !destinationText) {
+          alert("Please enter both source link and destination.");
+          return;
+        }
+
+        const coordsMatch = srcLink.match(/([-+]?[\d.]+),\s*([-+]?[\d.]+)/);
+        if (!coordsMatch) {
+          alert("Could not extract coordinates from the source link.");
+          return;
+        }
+
+        const lat = parseFloat(coordsMatch[1]);
+        const lon = parseFloat(coordsMatch[2]);
+        userMarker.setLatLng([lat, lon]);
+        map.setView([lat, lon], 14);
+
+        try {
+          destCoords = await fetchDestinationCoordinates(destinationText);
+          if (destMarker) map.removeLayer(destMarker);
+          destMarker = L.marker(destCoords).addTo(map);
+          map.setView(destCoords, 14);
+
+          const dist = haversineDistance([lat, lon], destCoords);
+          if (dist <= 100) {
+            alarm.play();
+            alert("You are within 100 meters of your destination!");
+          } else {
+            alert(`You're ${Math.round(dist)} meters away from your destination.`);
+          }
+        } catch (err) {
+          alert("Error locating destination: " + err.message);
+        }
+      });
+    });
+  </script>
+</body>
+
 </html>
