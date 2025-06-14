@@ -67,27 +67,98 @@
 
     <audio id="alarm" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio>
 
-    <section class="mt-20">
-      <h2 class="text-3xl font-bold text-center mb-8">Why Choose HomeChime?</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="glass-card">
-          <h3 class="text-xl font-semibold mb-2">No Backend Required</h3>
-          <p>Runs entirely in your browser. No servers, no data storage, complete privacy.</p>
+    <!-- How It Works Section -->
+  <section id="how-it-works" class="py-20 px-4 bg-black bg-opacity-20">
+    <div class="container mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">How It Works</h2>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Three simple steps to never miss your destination again.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white font-bold text-xl">
+            1
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Share Your Location</h3>
+          <p class="text-gray-300">Paste your Google Maps live location link to start tracking your journey.</p>
         </div>
-        <div class="glass-card">
-          <h3 class="text-xl font-semibold mb-2">Works on All Browsers</h3>
-          <p>Compatible with Chrome, Firefox, Safari, and Edge. Mobile and desktop ready.</p>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white font-bold text-xl">
+            2
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Set Your Destination</h3>
+          <p class="text-gray-300">Enter where you want to be alerted. We'll calculate the distance automatically.</p>
         </div>
-        <div class="glass-card">
-          <h3 class="text-xl font-semibold mb-2">Real-time Location Tracking</h3>
-          <p>Precise GPS tracking with 100-meter proximity detection for accurate alerts.</p>
-        </div>
-        <div class="glass-card">
-          <h3 class="text-xl font-semibold mb-2">Custom Audio Alarms</h3>
-          <p>Choose from built-in sounds or upload your own. Never sleep through your stop.</p>
+
+        <div class="text-center">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-6 text-white font-bold text-xl">
+            3
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Get Alerted</h3>
+          <p class="text-gray-300">Receive an audio alarm when you're within 100 meters of your destination.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
+  
+    <!-- Features Section -->
+  <section id="features" class="py-20 px-4">
+    <div class="container mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4">Why Choose HomeChime?</h2>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+          Simple, reliable, and works everywhere. No downloads, no setup complexity.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="backdrop-blur-md bg-white bg-opacity-5 border border-white border-opacity-10 transition-all duration-300 hover:bg-opacity-10 hover:scale-105 p-8 text-center rounded-lg">
+          <div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.477 2 2 6.485 2 12c0 5.516 4.477 10 10 10s10-4.484 10-10c0-5.515-4.477-10-10-10z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">No Backend Required</h3>
+          <p class="text-gray-300">Runs entirely in your browser. No servers, no data storage, complete privacy.</p>
+        </div>
+
+        <div class="backdrop-blur-md bg-white bg-opacity-5 border border-white border-opacity-10 transition-all duration-300 hover:bg-opacity-10 hover:scale-105 p-8 text-center rounded-lg">
+          <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M6.62 10.79a15.91 15.91 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.21c1.2.48 2.5.74 3.86.74a1 1 0 011 1v3.49a1 1 0 01-1 1C10.07 21.51 2.49 13.93 2.49 4a1 1 0 011-1H7a1 1 0 011 1c0 1.36.26 2.66.74 3.86a1 1 0 01-.21 1.11l-2.2 2.2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Works on All Browsers</h3>
+          <p class="text-gray-300">Compatible with Chrome, Firefox, Safari, and Edge. Mobile and desktop ready.</p>
+        </div>
+
+        <div class="backdrop-blur-md bg-white bg-opacity-5 border border-white border-opacity-10 transition-all duration-300 hover:bg-opacity-10 hover:scale-105 p-8 text-center rounded-lg">
+          <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-violet-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Real-time Location Tracking</h3>
+          <p class="text-gray-300">Precise GPS tracking with 100-meter proximity detection for accurate alerts.</p>
+        </div>
+
+        <div class="backdrop-blur-md bg-white bg-opacity-5 border border-white border-opacity-10 transition-all duration-300 hover:bg-opacity-10 hover:scale-105 p-8 text-center rounded-lg">
+          <div class="w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 3v18c4.97 0 9-4.03 9-9s-4.03-9-9-9z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-semibold mb-3">Custom Audio Alarms</h3>
+          <p class="text-gray-300">Choose from built-in sounds or upload your own. Never sleep through your stop.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   </main>
 
   <script>
