@@ -4,6 +4,15 @@
 
 ---
 
+## Inspiration
+Every afternoon, my younger brother comes home by the school bus, which shares a live location link via Google Maps. My mother waits anxiously, constantly asking me to check if the bus has reached the usual place where we go to pick him up — a signal that it’s time to leave.
+
+Tired of staring at my phone every few minutes, I dreamt of a better solution. One evening, fueled by my passion for coding and our daily routine, I created this web app. I input the school’s live location link and set the park as the destination.
+
+The next day, as the bus neared the park, a soft chime echoed from my device, easing the tension at home. My mother smiled, her eyes misty, as I said, “Now we’ll always know he’s almost here.” The app became our family’s silent protector — turning worry into warmth.
+
+---
+
 ## Features
 
 - Accepts Google Maps live location link (or uses browser geolocation)
